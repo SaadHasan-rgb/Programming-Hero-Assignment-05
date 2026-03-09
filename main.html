@@ -54,7 +54,100 @@
 
   </header>
 
+  <main class="max-w-[1920px] mx-auto">
 
+    <div class="w-[95%] mx-auto">
+
+      <!-- filter buttons -->
+      <div class="mt-[60px] border-2 p-3 border-gray-200">
+
+        <button id="tabAllIssues" class="btn btn-active btn-primary">All</button>
+        <button id="tabOpenIssues" class="btn btn-active">Open</button>
+        <button id="tabClosedIssues" class="btn btn-active">Closed</button>
+
+      </div>
+
+      <!-- issue count section -->
+      <div
+        class="mt-4 border-2 p-3 border-gray-200 flex flex-wrap gap-4 items-center justify-center sm:justify-between">
+
+        <div class="flex items-center gap-3">
+
+          <div class="bg-[#ECE4FF] p-2 rounded-full">
+            <img src="assets/Aperture.png" />
+          </div>
+
+          <div>
+
+            <h4 class="font-semibold text-[20px]">
+              <span id="issueCountText">0</span> Issues
+            </h4>
+
+            <p class="text-[#64748B]">
+              Track and manage your project issues
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="flex gap-4 items-center">
+
+          <p><i class="fa-solid fa-circle text-[#00A96E]"></i> Open</p>
+          <p><i class="fa-solid fa-circle text-[#A855F7]"></i> Closed</p>
+
+        </div>
+
+      </div>
+
+      <!-- loading spinner -->
+      <div id="loaderArea" class="items-center justify-center mt-10 md:mt-15 hidden">
+        <span class="loading loading-spinner loading-xl"></span>
+      </div>
+
+      <!-- cards area -->
+      <div id="cardsWrapper" class="mt-4 px-2">
+
+        <div id="issuesGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+
+      </div>
+
+      <!-- if no issues found -->
+      <div id="emptyResult" class="mt-10 hidden">
+
+        <div class="text-center">
+
+          <img class="mx-auto" src="assets/alert-error.png" />
+          <p class="font-semibold">No Issus Found</p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- modal for issue details -->
+  <dialog id="issueDetailsModal" class="modal modal-bottom sm:modal-middle">
+
+    <div class="modal-box">
+
+      <div id="modalDataArea"></div>
+
+      <div class="modal-action">
+        <form method="dialog">
+          <button class="btn btn-primary text-[12px] h-6">Close</button>
+        </form>
+      </div>
+
+    </div>
+
+  </dialog>
+
+
+  <script src="scripts/main.js"></script>
 
 </body>
 
