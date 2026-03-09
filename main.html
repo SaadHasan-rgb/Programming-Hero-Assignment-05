@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <!-- basic meta -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+
+  <title>GitHub Issues Tracker</title>
+
+</head>
+
+<body>
+
+  <header>
+
+    <!-- navbar -->
+    <div class="navbar flex justify-between bg-base-100 shadow-sm">
+
+      <div class="flex items-center gap-2">
+
+
+        <img onclick="location.reload()" class="w-9 cursor-pointer" src="assets/github-logo.png" />
+
+
+        <a onclick="location.reload()" class="text-xl hidden sm:inline cursor-pointer font-bold">
+          GitHub Issues Tracker
+        </a>
+
+      </div>
+
+      <!-- search area -->
+      <div class="flex gap-2">
+
+        <input id="searchInputField" type="text" placeholder="Search issues..."
+          class="input input-bordered w-24 md:w-auto" />
+
+        <button id="searchActionBtn" class="btn btn-primary">
+          Search
+        </button>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+
+</body>
+
+</html>
