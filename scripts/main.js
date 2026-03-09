@@ -109,37 +109,82 @@ ${issue.description}
 }
 
 // modal with issue details
-function openIssueModal(issueId) {
 
-  const foundIssue =
-    storedIssues.find(item => item.id === issueId);
+function openIssueModal(issueId){
 
-  const dateText =
-    new Date(foundIssue.createdAt).toLocaleDateString("en-US");
+const foundIssue =
+storedIssues.find(item => item.id === issueId);
 
-  modalBody.innerHTML = `
+const dateText =
+new Date(foundIssue.createdAt).toLocaleDateString("en-US");
 
-<h4 class="font-semibold text-[14px]">
+// creating status badge
+const statusBadge =
+foundIssue.status === "open"
+? `<span class="badge badge-success text-white">Open</span>`
+: `<span class="badge badge-secondary text-white">Closed</span>`;
+
+// creating labels html
+let labelsHtml = "";
+
+if(foundIssue.labels && foundIssue.labels.length > 0){
+
+foundIssue.labels.forEach(label => {
+
+labelsHtml += `
+<span class="badge badge-outline mr-2">
+${label}
+</span>
+`;
+
+});
+
+}
+
+// modal content
+modalBody.innerHTML = `
+
+<h3 class="font-semibold text-[16px] mb-3">
 ${foundIssue.title}
-</h4>
+</h3>
 
-<p class="text-[#64748B] text-[12px] mt-3">
+<div class="flex items-center gap-2 mb-2">
+${statusBadge}
+<span class="text-[12px] text-gray-500">
+Opened by ${foundIssue.author} | ${dateText}
+</span>
+</div>
+
+<div class="flex gap-2 mb-3">
+${labelsHtml}
+</div>
+
+<p class="text-[13px] text-gray-600 mb-4">
 ${foundIssue.description}
 </p>
 
-<p class="text-[12px] mt-3">
-Opened by ${foundIssue.author}
-</p>
+<div class="flex justify-between text-[12px]">
 
-<p class="text-[12px]">
-${dateText}
-</p>
+<div>
+<p class="font-medium">Assignee:</p>
+<p>${foundIssue.assignee || "Not Assigned"}</p>
+</div>
+
+<div>
+<p class="font-medium">Priority:</p>
+<span class="badge badge-warning">
+${foundIssue.priority}
+</span>
+</div>
+
+</div>
 
 `;
 
-  modal.showModal();
-}
 
+modal.showModal();
+
+}
 
 // showing all issues
 btnAll.addEventListener("click", function () {
