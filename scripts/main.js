@@ -73,7 +73,7 @@ function renderCards(dataArray) {
     const dateText =
       new Date(issue.createdAt).toLocaleDateString("en-US");
 
-// setting border color based on status
+    // setting border color based on status
     const borderClass =
       issue.status === "open"
         ? "border-[#00A96E]"
@@ -105,6 +105,39 @@ ${issue.description}
     gridArea.appendChild(card);
 
   });
+
+}
+
+// modal with issue details
+function openIssueModal(issueId) {
+
+  const foundIssue =
+    storedIssues.find(item => item.id === issueId);
+
+  const dateText =
+    new Date(foundIssue.createdAt).toLocaleDateString("en-US");
+
+  modalBody.innerHTML = `
+
+<h4 class="font-semibold text-[14px]">
+${foundIssue.title}
+</h4>
+
+<p class="text-[#64748B] text-[12px] mt-3">
+${foundIssue.description}
+</p>
+
+<p class="text-[12px] mt-3">
+Opened by ${foundIssue.author}
+</p>
+
+<p class="text-[12px]">
+${dateText}
+</p>
+
+`;
+
+  modal.showModal();
 
 }
 
