@@ -49,3 +49,62 @@ async function loadIssues() {
 
 }
 
+
+// call function when page loads
+loadIssues();
+
+
+// creating issue cards
+function renderCards(dataArray) {
+
+  gridArea.innerHTML = "";
+
+  totalIssuesText.innerText = dataArray.length;
+
+  if (dataArray.length === 0) {
+    emptyBox.classList.remove("hidden");
+    return;
+  }
+
+  emptyBox.classList.add("hidden");
+
+  dataArray.forEach(issue => {
+
+    const dateText =
+      new Date(issue.createdAt).toLocaleDateString("en-US");
+
+// setting border color based on status
+    const borderClass =
+      issue.status === "open"
+        ? "border-[#00A96E]"
+        : "border-[#A855F7]";
+
+    const card = document.createElement("div");
+
+    card.innerHTML = `
+
+<div onclick="openIssueModal(${issue.id})"
+class="p-4 border-t-5 ${borderClass} rounded-xl shadow-xl cursor-pointer">
+
+<h3 class="font-semibold mt-3 mb-2 text-[14px] line-clamp-1">
+${issue.title}
+</h3>
+
+<p class="text-[#64748B] mb-3 text-[12px] line-clamp-2">
+${issue.description}
+</p>
+
+<p class="text-[#64748B] text-[12px]">#by ${issue.author}</p>
+
+<p class="text-[#64748B] text-[12px]">${dateText}</p>
+
+</div>
+
+`;
+
+    gridArea.appendChild(card);
+
+  });
+
+}
+
