@@ -30,5 +30,22 @@ function hideLoader() {
   loader.classList.add("hidden");
 }
 
+// fetching all issues from API
+async function loadIssues() {
 
+  showLoader();
+
+  const response = await fetch(
+    "https://phi-lab-server.vercel.app/api/v1/lab/issues"
+  );
+
+  const result = await response.json();
+
+  storedIssues = result.data;
+
+  hideLoader();
+
+  renderCards(storedIssues);
+
+}
 
