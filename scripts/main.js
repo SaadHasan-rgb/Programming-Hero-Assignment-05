@@ -70,36 +70,84 @@ function renderCards(dataArray) {
 
   dataArray.forEach(issue => {
 
-    const dateText =
-      new Date(issue.createdAt).toLocaleDateString("en-US");
+    const dateText = new Date(issue.createdAt).toLocaleDateString("en-US");
 
-    // setting border color based on status
+    // border color
     const borderClass =
       issue.status === "open"
         ? "border-[#00A96E]"
         : "border-[#A855F7]";
 
+    // status icon
+    const statusIcon =
+      issue.status === "open"
+        ? `<div class="bg-green-100 p-2 rounded-full">
+        <i class="fa-solid fa-circle-notch text-green-600"></i>
+      </div>`
+        : `<div class="bg-purple-100 p-2 rounded-full">
+        <i class="fa-solid fa-check text-purple-600"></i>
+      </div>`;
+
+    // priority badge color
+    let priorityBadge = "";
+
+    if (issue.priority === "high") {
+      priorityBadge = `<span class="badge bg-red-100 text-red-500">HIGH</span>`;
+    }
+    else if (issue.priority === "medium") {
+      priorityBadge = `<span class="badge bg-yellow-100 text-yellow-600">MEDIUM</span>`;
+    }
+    else {
+      priorityBadge = `<span class="badge bg-gray-200 text-gray-600">LOW</span>`;
+    }
+
+    // labels
+    let labelsHtml = "";
+
+    if (issue.labels && issue.labels.length > 0) {
+      issue.labels.forEach(label => {
+        labelsHtml += `
+      <span class="badge badge-outline text-xs mr-2">
+        ${label.toUpperCase()}
+      </span>
+    `;
+      });
+    }
+
     const card = document.createElement("div");
 
     card.innerHTML = `
-
 <div onclick="openIssueModal(${issue.id})"
-class="p-4 border-t-5 ${borderClass} rounded-xl shadow-xl cursor-pointer">
+class="p-5 border-t-4 ${borderClass} rounded-xl shadow-md cursor-pointer bg-white">
 
-<h3 class="font-semibold mt-3 mb-2 text-[14px] line-clamp-1">
-${issue.title}
-</h3>
+<div class="flex justify-between items-start">
 
-<p class="text-[#64748B] mb-3 text-[12px] line-clamp-2">
-${issue.description}
-</p>
+${statusIcon}
 
-<p class="text-[#64748B] text-[12px]">#by ${issue.author}</p>
-
-<p class="text-[#64748B] text-[12px]">${dateText}</p>
+${priorityBadge}
 
 </div>
 
+<h3 class="font-semibold mt-3 mb-2 text-[15px] line-clamp-2">
+${issue.title}
+</h3>
+
+<p class="text-[#64748B] mb-4 text-[13px] line-clamp-2">
+${issue.description}
+</p>
+
+<div class="flex gap-2 mb-4 flex-wrap">
+${labelsHtml}
+</div>
+
+<div class="text-[#64748B] text-[12px]">
+
+<p>#${issue.id} by ${issue.author}</p>
+<p>${dateText}</p>
+
+</div>
+
+</div>
 `;
 
     gridArea.appendChild(card);
@@ -110,39 +158,39 @@ ${issue.description}
 
 // modal with issue details
 
-function openIssueModal(issueId){
+function openIssueModal(issueId) {
 
-const foundIssue =
-storedIssues.find(item => item.id === issueId);
+  const foundIssue =
+    storedIssues.find(item => item.id === issueId);
 
-const dateText =
-new Date(foundIssue.createdAt).toLocaleDateString("en-US");
+  const dateText =
+    new Date(foundIssue.createdAt).toLocaleDateString("en-US");
 
-// creating status badge
-const statusBadge =
-foundIssue.status === "open"
-? `<span class="badge badge-success text-white">Open</span>`
-: `<span class="badge badge-secondary text-white">Closed</span>`;
+  // creating status badge
+  const statusBadge =
+    foundIssue.status === "open"
+      ? `<span class="badge badge-success text-white">Open</span>`
+      : `<span class="badge badge-secondary text-white">Closed</span>`;
 
-// creating labels html
-let labelsHtml = "";
+  // creating labels html
+  let labelsHtml = "";
 
-if(foundIssue.labels && foundIssue.labels.length > 0){
+  if (foundIssue.labels && foundIssue.labels.length > 0) {
 
-foundIssue.labels.forEach(label => {
+    foundIssue.labels.forEach(label => {
 
-labelsHtml += `
+      labelsHtml += `
 <span class="badge badge-outline mr-2">
 ${label}
 </span>
 `;
 
-});
+    });
 
-}
+  }
 
-// modal content
-modalBody.innerHTML = `
+  // modal content
+  modalBody.innerHTML = `
 
 <h3 class="font-semibold text-[16px] mb-3">
 ${foundIssue.title}
@@ -181,8 +229,7 @@ ${foundIssue.priority}
 
 `;
 
-
-modal.showModal();
+  modal.showModal();
 
 }
 
